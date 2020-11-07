@@ -7,6 +7,7 @@ var app = express();
 
 require("dotenv").config();
 const config = require("config");
+const { errors } = require("celebrate");
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -18,7 +19,7 @@ app.use("/", operationsRouter);
 
 require("./startup/db")();
 
-console.log(config.get("dbUri"));
+app.use(errors());
 
 // app.use(express.static(path.join(__dirname, "public")));
 module.exports = app;
