@@ -1,0 +1,4 @@
+{
+    "appName": "Servidor en entorno de desarrollo",
+    "dbUri": "mongodb+srv://dbUser:PcUTAsOGaFANdY3P@express-capacitation.xz6rr.mongodb.net/development?retryWrites=true&w=majority"
+}

@@ -133,6 +133,8 @@ var data = [
   },
 ];
 
+const { Receipt } = require("./receipt.model");
+
 router.get("/", function (req, res) {
   let filtered = data;
   if (req.query.type)
@@ -146,12 +148,15 @@ router.get("/:id", function (req, res) {
   return res.status(200).send(receipt);
 });
 
-router.post("/", function (req, res) {
-  data.push({
+router.post("/", async function (req, res) {
+  const receipt = new Receipt({
     id: data.length + 1,
     ...req.body,
   });
-  return res.status(201).send(data[data.length - 1]);
+
+  await receipt.save();
+
+  return res.status(201).send(receipt);
 });
 
 module.exports = router;
