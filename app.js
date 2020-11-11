@@ -15,7 +15,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 const operationsRouter = require("./api/operations/operations.router");
+const managementRouter = require("./api/management/management.router")
+
 app.use("/", operationsRouter);
+app.use("/management",managementRouter);
 
 require("./startup/db")();
 
