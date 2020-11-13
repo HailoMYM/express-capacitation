@@ -1,8 +1,9 @@
-var express = require("express");
-var router = express.Router();
+const express = require('express');
 
-router.use("/receipts", require("./receipt/receipt.router"));
-router.use("/payments", require("./payment/payment.router"));
-router.use("/invoices", require("./invoice/invoice.router"));
+const router = express.Router();
+
+router.use('/receipts', require('./receipt/receipt.router'));
+router.use('/payments', require('./payment/payment.router'));
+router.use('/invoices', require('./invoice/invoice.router'));
 
 module.exports = router;
