@@ -1,64 +1,15 @@
-var express = require("express");
-var router = express.Router();
-const { celebrate } = require("celebrate");
+const express = require('express');
+const { celebrate } = require('celebrate');
 
-const { Receipt } = require("./receipt.model");
-const ReceiptValidator = require("./receipt.validator");
+const router = express.Router();
 
-router.get("/", async function (req, res) {
-  const receipts = await Receipt.find(req.query);
+const Controller = require('./receipt.controller');
+const Validator = require('./receipt.validator');
 
-  return res.status(200).send(receipts);
-});
-
-router.get("/:id", async function (req, res) {
-  const receipt = await Receipt.findById(req.params.id);
-
-  if (!receipt)
-    res.status(404).send({
-      status: 404,
-      message: "Receipt not found.",
-      data: {},
-      userMessage: "El recibo solicitado no existe.",
-    });
-
-  return res.status(200).send(receipt);
-});
-
-router.post("/", celebrate(ReceiptValidator.Post), async function (req, res) {
-  const receipt = new Receipt(req.body);
-
-  await receipt.save();
-
-  return res.status(201).send({
-    status: 201,
-    message: "Receipt created.",
-    data: {
-      receipt,
-    },
-  });
-});
-
-router.put("/:id", async function (req, res) {
-  const receipt = await Receipt.findById(req.params.id);
-
-  if (!receipt) res.status(404).send({});
-
-  receipt.type = req.body.type;
-
-  await receipt.save();
-
-  return res.status(200).send(receipt);
-});
-
-router.delete("/:id", async function (req, res) {
-  const receipt = await Receipt.findById(req.params.id);
-
-  if (!receipt) res.status(404).send({});
-
-  await Receipt.deleteOne({ _id: req.params.id });
-
-  return res.status(200).send(receipt);
-});
+router.get('/', Controller.ListReceipt);
+router.get('/:id', Controller.GetReceipt);
+router.post('/', celebrate(Validator.Post), Controller.PostReceipt);
+// router.put('/:id', Controller.PutReceipt);
+// router.delete('/:id', Controller.DeleteReceipt);
 
 module.exports = router;

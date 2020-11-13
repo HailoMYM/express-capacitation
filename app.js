@@ -1,26 +1,26 @@
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
 var app = express();
 
-require("dotenv").config();
-const config = require("config");
-const { errors } = require("celebrate");
+require('dotenv').config();
+const config = require('config');
+const { errors } = require('celebrate');
 
-app.use(logger("dev"));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-const operationsRouter = require("./api/operations/operations.router");
-const managementRouter = require("./api/management/management.router")
+const operationsRouter = require('./api/operations/operations.router');
+const managementRouter = require('./api/management/management.router');
 
-app.use("/", operationsRouter);
-app.use("/management",managementRouter);
+app.use('/', operationsRouter);
+app.use('/management', managementRouter);
 
-require("./startup/db")();
+require('./startup/db')();
 
 app.use(errors());
 
