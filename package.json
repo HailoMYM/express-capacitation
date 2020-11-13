@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "prod": "NODE_ENV=production node ./bin/www"
+    "prod": "NODE_ENV=production node ./bin/www",
+    "lint": "./node_modules/.bin/eslint  ./ --ignore-path .gitignore",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --write \"{,!(node_modules)/**/}*.js\""
   },
   "dependencies": {
     "celebrate": "^13.0.4",
@@ -17,6 +20,12 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2"
   }
 }
