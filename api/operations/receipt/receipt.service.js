@@ -1,3 +1,4 @@
+const winston = require('winston');
 const { Receipt } = require('./receipt.model');
 
 const { setResponse } = require('../../utils');
@@ -28,6 +29,7 @@ const validatePostReceipt = (reqBody) => {
 };
 
 const PostReceipt = async (reqBody) => {
+  throw new Error('Error');
   const receipt = new Receipt(reqBody);
   await receipt.save();
 

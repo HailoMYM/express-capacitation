@@ -1,28 +1,22 @@
+/* eslint-disable global-require */
 const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+
+require('module-alias/register');
 
 const app = express();
 
-require('dotenv').config();
-const config = require('config');
-const { errors } = require('celebrate');
+require('./startup/config')(); // ? Variables de entorno
+require('./startup/logging')(); // ? Estrategias de logging
+require('./startup/validation')(); // ? Configuracion de validacion
+require('./startup/middleware')(app); // ? Definir los middlewares globales
 
-app.use(logger('dev'));
+if (process.env.NODE_ENV === 'production') {
+  require('./startup/prod')(app);
+}
+
+require('./startup/db')(); // ? Coneccion a la DB
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 
-const operationsRouter = require('./api/operations/operations.router');
-const managementRouter = require('./api/management/management.router');
-
-app.use('/', operationsRouter);
-app.use('/management', managementRouter);
-
-require('./startup/db')();
-
-app.use(errors());
-
-// app.use(express.static(path.join(__dirname, "public")));
 module.exports = app;
