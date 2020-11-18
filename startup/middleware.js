@@ -51,7 +51,7 @@ module.exports = (app) => {
       let response;
       try {
         response = JSON.parse(body);
-      } catch (error) {
+      } catch () {
         response = body;
       }
 

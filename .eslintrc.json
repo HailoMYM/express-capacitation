@@ -20,5 +20,24 @@
     ],
     "no-console": "warn",
     "func-names": "off"
+  },
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          [
+            "@root",
+            "."
+          ],
+          [
+            "@",
+            "./api"
+          ]
+        ],
+        "extensions": [
+          ".js"
+        ]
+      }
+    }
   }
 }

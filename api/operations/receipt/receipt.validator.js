@@ -7,10 +7,22 @@ const Post = {
     message: Joi.string().max(256).required(),
     type: Joi.string().valid('boleta', 'factura').required(),
   },
-  query: {},
-  params: {},
+};
+
+const Get = {
+  body: {
+    id: Joi.objectId().required(),
+  },
+};
+
+const List = {
+  body: {
+    type: Joi.string().valid('boleta', 'factura'),
+  },
 };
 
 module.exports = {
   Post,
+  Get,
+  List,
 };

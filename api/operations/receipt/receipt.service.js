@@ -1,24 +1,23 @@
-const winston = require('winston');
+const { setResponse } = require('@/utils');
+
 const { Receipt } = require('./receipt.model');
 
-const { setResponse } = require('../../utils');
-
-const ListReceipt = async (reqQuery) => {
-  const receipts = await Receipt.find(reqQuery);
+const ListReceipt = async ({ query }) => {
+  const receipts = await Receipt.find(query);
 
   return setResponse(200, 'Receipts found.', receipts);
 };
 
-const GetReceipt = async (reqParams) => {
-  const receipt = await Receipt.findById(reqParams.id);
+const GetReceipt = async ({ params }) => {
+  const receipt = await Receipt.findById(params.id);
   if (!receipt) return setResponse(404, 'Receipt not found.');
 
   return setResponse(200, 'Receipt found.', receipt);
 };
 
-const validatePostReceipt = (reqBody) => {
+const validatePostReceipt = ({ body }) => {
   // * LOGICA MAS COMPLEJA PARA VALIDAR
-  if (reqBody.projectId > 5)
+  if (body.projectId > 5)
     return setResponse(
       400,
       'Invalid project Id.',
@@ -28,36 +27,13 @@ const validatePostReceipt = (reqBody) => {
   return setResponse(200, 'OK');
 };
 
-const PostReceipt = async (reqBody) => {
-  throw new Error('Error');
-  const receipt = new Receipt(reqBody);
+const PostReceipt = async ({ body }) => {
+  const receipt = new Receipt(body);
+
   await receipt.save();
 
   return setResponse(201, 'Receipt created.', receipt);
 };
-
-// router.put('/:id', async function (req, res) {
-//   const receipt = await Receipt.findById(req.params.id);
-
-//   if (!receipt) res.status(404).send({});
-
-//   receipt.type = req.body.type;
-
-//   await receipt.save();
-
-//   return res.status(200).send(receipt);
-// });
-
-// router.delete('/:id', async function (req, res) {
-//   const receipt = await Receipt.findById(req.params.id);
-
-//   if (!receipt) res.status(404).send({});
-
-//   await Receipt.deleteOne({ _id: req.params.id });
-
-//   return res.status(200).send(receipt);
-// });
-
 module.exports = {
   ListReceipt,
   GetReceipt,
